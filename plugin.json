@@ -1,19 +1,21 @@
 {
-    "name": "<TODO: your plugin name>",
-    "url": "<TODO: Your Plugin URL here>",
-    "description": "<TODO: Your Plugin description here>",
-    "main": "index.js",
+    "name": "OctoLane",
+    "url": "https://github.com/octolane-org/posthog-app",
+    "description": "OctoLane integration for PostHog",
+    "main": "index.ts",
     "posthogVersion": ">= 1.25.0",
     "config": [
         {
-            "markdown": "<TODO: your plugin config, remove if none>"
+            "markdown": "OctoLane Configuaration"
         },
         {
-            "key": "greeting",
-            "name": "What greeting would you like to use?",
+            "key": "octolaneApiKey",
+            "name": "Your OctoLane API key",
+            "hint": "You can find your API key in your OctoLane account settings",
             "type": "string",
-            "default": "Hello World!",
-            "required": false
+            "default": "",
+            "secret": true,
+            "required": true
         }
     ]
 }
