@@ -1,6 +1,6 @@
 import { PluginConfig, setupPlugin } from "./index";
 // @ts-ignore
-import { createPageview, resetMeta } from "@posthog/plugin-scaffold/test/utils";
+import { createPageview, resetMeta, createIdentify } from "@posthog/plugin-scaffold/test/utils";
 
 import * as index from "./index";
 import { Plugin, PluginMeta } from "@posthog/plugin-scaffold";
@@ -33,7 +33,7 @@ const defaultConfig: PluginConfig = {
   octolaneApiKey: "KEY",
 };
 
-async function resetMetaWithMmdb(): Promise<PluginMeta<string>> {
+async function resetMetaWithGeoIp(): Promise<PluginMeta<string>> {
   return resetMeta({
     geoip: {
       locate: (ipAddress: string) => {
@@ -49,16 +49,6 @@ describe("OctoLane Plugin", () => {
 
     console.log = jest.fn();
     console.error = jest.fn();
-
-    // mockedMeta = {
-    //   global: {
-    //     buffer: {
-    //       add: jest.fn(),
-    //     },
-    //     eventsToIgnore: new Set(["ignore me"]),
-    //   },
-    //   config: defaultConfig,
-    // };
   });
 
   describe("setupPlugin()", () => {
@@ -94,15 +84,27 @@ describe("OctoLane Plugin", () => {
 
   describe("processEvent()", () => {
     const MOCK_IP = "89.160.20.129";
+    const MOCK_UUID = "37114ebb-7b13-4301-b849-0d0bd4d5c7e5";
 
-    it("does not process events that should be ignored", async () => {
+    it("process event with mock ip", async () => {
       const event = await processEvent(
-        { ...createPageview(), ip: MOCK_IP },
-        await resetMetaWithMmdb(),
+        { ...createPageview(), ip: MOCK_IP, uuid: MOCK_UUID },
+        await resetMetaWithGeoIp(),
       );
 
       expect(event?.event).toEqual("$pageview");
       expect(event?.ip).toEqual(MOCK_IP);
+    });
+
+    it("process event with mock ip and elements", async () => {
+      const event = await processEvent(
+        { ...createIdentify(), ip: MOCK_IP, uuid: MOCK_UUID },
+        await resetMetaWithGeoIp(),
+      );
+
+      expect(event?.event).toEqual("$identify");
+      expect(event?.ip).toEqual(MOCK_IP);
+      expect(event?.$set).toEqual(expect.objectContaining({ email: "test@posthog.com" }));
     });
   });
 });

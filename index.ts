@@ -1,4 +1,4 @@
-import { Meta, Plugin, PluginEvent, RetryError } from "@posthog/plugin-scaffold";
+import { Meta, Plugin, PluginEvent } from "@posthog/plugin-scaffold";
 
 export type PluginConfig = {
   octolaneApiKey: string;
@@ -22,9 +22,6 @@ async function enrichOctoLaneIp(params: OctoLaneConfig) {
     },
   };
 
-  console.log("eventBody");
-  console.log(eventBody);
-
   const response = await fetch("https://events.octolane.com/v1/enrich", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -46,7 +43,7 @@ async function enrichOctoLaneIp(params: OctoLaneConfig) {
 // Plugin method that runs on plugin load
 export const setupPlugin: Plugin["setupPlugin"] = async (meta) => {
   if (!meta.config.octolaneApiKey) {
-    throw new RetryError("OctoLane API key is set");
+    throw new Error("OctoLane API key is set");
   }
 };
 
@@ -55,14 +52,10 @@ export const processEvent: Plugin["processEvent"] = async (
   event: PluginEvent,
   { config, cache, ...othersMetadata },
 ) => {
-  const counterValue = (await cache.get("greeting_counter", 0)) as number;
-  cache.set("greeting_counter", counterValue + 1);
-
   if (!event.properties) event.properties = {};
 
   if (config.octolaneApiKey) {
     event.properties["octolaneApiKey"] = config.octolaneApiKey;
-    event.properties["greeting_counter"] = counterValue;
     await enrichOctoLaneIp({
       event,
       geoip: othersMetadata.geoip,
