@@ -1,33 +1,11 @@
-import { PluginConfig, setupPlugin } from "./index";
+import { Plugin, PluginMeta } from "@posthog/plugin-scaffold";
 // @ts-ignore
 import { createPageview, resetMeta, createIdentify } from "@posthog/plugin-scaffold/test/utils";
 
 import * as index from "./index";
-import { Plugin, PluginMeta } from "@posthog/plugin-scaffold";
+import type { PluginConfig } from "./types";
 
-const { processEvent } = index as Required<Plugin>;
-
-// const events = [
-//   {
-//     event: "test",
-//     properties: {},
-//     distinct_id: "did1",
-//     team_id: 1,
-//     uuid: "37114ebb-7b13-4301-b849-0d0bd4d5c7e5",
-//     ip: "127.0.0.1",
-//     timestamp: "2022-08-18T15:42:32.597Z",
-//   },
-//   {
-//     event: "test2",
-//     properties: {},
-//     distinct_id: "did1",
-//     team_id: 1,
-//     uuid: "37114ebb-7b13-4301-b859-0d0bd4d5c7e5",
-//     ip: "127.0.0.1",
-//     timestamp: "2022-08-18T15:42:32.597Z",
-//     elements: [{ attr_id: "haha" }],
-//   },
-// ];
+const { processEvent, setupPlugin } = index as Required<Plugin>;
 
 const defaultConfig: PluginConfig = {
   octolaneApiKey: "KEY",

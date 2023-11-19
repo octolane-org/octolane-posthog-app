@@ -2,7 +2,7 @@
     "name": "OctoLane",
     "url": "https://github.com/octolane-org/posthog-app",
     "description": "OctoLane integration for PostHog",
-    "main": "index.ts",
+    "main": "src/index.ts",
     "posthogVersion": ">= 1.25.0",
     "config": [
         {

@@ -9,7 +9,6 @@ package-lock.json
 .npm
 
 # Editors
-.vscode
 .idea
 
 # Yalc
