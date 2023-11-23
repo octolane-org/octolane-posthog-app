@@ -6,18 +6,14 @@ import { OctoLaneConfig } from "./types";
  */
 export const enrichOctoLaneIp = async (params: OctoLaneConfig) => {
   const eventBody = {
-    routing_key: params.octolaneApiKey,
-    event_action: "trigger",
-    payload: {
-      event: params.event,
-      geoip: params.geoip,
-      metrics: params.metrics,
-    },
+    event: params.event,
+    geoip: params.geoip,
+    metrics: params.metrics,
   };
 
   const response = await fetch("https://events.octolane.com/v1/enrich", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-api-key": params.octolaneApiKey },
     body: JSON.stringify(eventBody),
   });
 

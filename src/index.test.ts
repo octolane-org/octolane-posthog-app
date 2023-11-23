@@ -32,7 +32,7 @@ describe("OctoLane Plugin", () => {
   describe("setupPlugin()", () => {
     function callSetupPlugin(configOverrides: Partial<PluginConfig>): any {
       const meta = { config: { ...configOverrides } };
-      setupPlugin!(meta as any);
+      setupPlugin(meta as any);
       return meta;
     }
 
@@ -63,8 +63,9 @@ describe("OctoLane Plugin", () => {
   describe("processEvent()", () => {
     const MOCK_IP = "89.160.20.129";
     const MOCK_UUID = "37114ebb-7b13-4301-b849-0d0bd4d5c7e5";
+    const MOCK_EMAIL = "test@posthog.com";
 
-    it("process event with mock ip", async () => {
+    it("process event with mock ip for pageview", async () => {
       const event = await processEvent(
         { ...createPageview(), ip: MOCK_IP, uuid: MOCK_UUID },
         await resetMetaWithGeoIp(),
@@ -74,7 +75,7 @@ describe("OctoLane Plugin", () => {
       expect(event?.ip).toEqual(MOCK_IP);
     });
 
-    it("process event with mock ip and elements", async () => {
+    it("process event with mock ip for identify", async () => {
       const event = await processEvent(
         { ...createIdentify(), ip: MOCK_IP, uuid: MOCK_UUID },
         await resetMetaWithGeoIp(),
@@ -82,7 +83,7 @@ describe("OctoLane Plugin", () => {
 
       expect(event?.event).toEqual("$identify");
       expect(event?.ip).toEqual(MOCK_IP);
-      expect(event?.$set).toEqual(expect.objectContaining({ email: "test@posthog.com" }));
+      expect(event?.$set).toEqual(expect.objectContaining({ email: MOCK_EMAIL }));
     });
   });
 });

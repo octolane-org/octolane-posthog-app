@@ -1,4 +1,4 @@
-import { Plugin, PluginEvent } from "@posthog/plugin-scaffold";
+import { Plugin } from "@posthog/plugin-scaffold";
 
 import { enrichOctoLaneIp } from "./sendEventToOctolane";
 
@@ -20,7 +20,7 @@ export const setupPlugin: Plugin["setupPlugin"] = async (meta) => {
  * @returns
  */
 export const processEvent: Plugin["processEvent"] = async (
-  event: PluginEvent,
+  event,
   { config, cache, ...othersMetadata },
 ) => {
   if (!event.properties) event.properties = {};
