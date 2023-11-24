@@ -1,36 +1,37 @@
-# PostHog OctoLane Plugin
+# PostHog Octolane Integration App
 
-This is a PostHog plugin that integrates with [OctoLane](https://www.octolane.com) to enrich IP, company, and people data for PostHog events.
+This PostHog app seamlessly integrates with [Octolane](https://www.octolane.com) to augment PostHog events with detailed IP, company, and individual data, leveraging Octolane's rich datasets.
 
-## Features
-- Enriches PostHog events with OctoLane data.
-- Configurable via the PostHog UI with your OctoLane API key.
+## Key Features
+- Dynamically enriches PostHog events with comprehensive data from Octolane, including detailed company information.
+- Easily configurable through the PostHog interface using your Octolane API key, allowing for swift setup and integration.
 
-## IP Address Detection
+## IP Address Resolution
 
-This plugin prefers to use event property $ip (which should be of type string), but if that is not provided, it uses the IP address of the client that sent the event. This way in most cases the plugin can infer the IP address without any work on your side.
+- Primary source for IP address data is the $ip event property, expected in string format.
+- In the absence of $ip, the app smartly defaults to the client's IP address for event generation, ensuring seamless data capture with minimal setup.
 
 ## Properties
 
-The following properties can be added to the event if its IP address can be matched to a OctoLane location:
+Upon successful IP address correlation with OctoLane's database, the following enrichments are possible:
 
-- octolaneApiKey: string
+- `octolaneApiKey`: A string type property for enhanced data integration.
 
 ## Installation
 
-1. Visit 'Project Plugins' under 'Settings'
-2. Enable plugins if you haven't already done so
-3. Click the 'Repository' tab next to 'Installed'
-4. Click 'Install' on this plugin
-5. Add your [Octolane API key](https://app.octolane.com/settings) at the configuration step
-5. Enable the plugin
+1. Navigate to 'Browse Apps' under 'APPS' section.
+2. Locate the Octolane app using the search functionality.
+3. Click the 'Configure' button next to "Octolane" app under "Available Apps".
+4. CLick on "Enable" to actvate the app.
+5. Add your [Octolane API key](https://app.octolane.com/settings) at the configuration step.
+6. Click on "Save" to finalize.
 
 ## Configuration
 
-The plugin requires your [OctoLane API key](https://app.octolane.com/settings) for authentication. You can find this key in your OctoLane account settings.
+The app requires your [Octolane API key](https://app.octolane.com/settings) for authentication. You can find this key in your Octolane account settings.
 
-## License 
+## Open Source Contribution and License
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-red.svg?style=flat-square)
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is open source and released under a permissive MIT license. This means you are free to make further contributions or changes to this project, so long as an iriginal copy of the license and copyright information is included with the software.
