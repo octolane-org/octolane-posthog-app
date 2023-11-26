@@ -11,7 +11,7 @@ export const enrichOctoLaneIp = async (params: OctoLaneConfig) => {
     metrics: params.metrics,
   };
 
-  const response = await fetch("https://events.octolane.com/v1/enrich", {
+  const response = await fetch("https://events.octolane.com/posthog", {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-api-key": params.octolaneApiKey },
     body: JSON.stringify(eventBody),
