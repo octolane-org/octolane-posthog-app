@@ -9,11 +9,11 @@
     "octolane"
   ],
   "main": "index.ts",
-  "repository": "https://github.com/octolane-org/posthog-app",
+  "repository": "https://github.com/octolane-org/octolane-posthog-app",
   "bugs": {
-    "url": "https://github.com/octolane-org/posthog-app/issues"
+    "url": "https://github.com/octolane-org/octolane-posthog-app/issues"
   },
-  "homepage": "https://github.com/octolane-org/posthog-app#readme",
+  "homepage": "https://github.com/octolane-org/octolane-posthog-app#readme",
   "author": "OctoLane",
   "jest": {
     "testEnvironment": "node"
