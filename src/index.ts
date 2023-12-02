@@ -1,7 +1,5 @@
 import { Plugin } from "@posthog/plugin-scaffold";
 
-import { enrichOctoLaneIp } from "./sendEventToOctolane";
-
 /**
  * Plugin method that runs on plugin load
  * @description Check if the OctoLane API key is set
@@ -14,12 +12,12 @@ export const setupPlugin: Plugin["setupPlugin"] = async (meta) => {
 };
 
 /**
- * Plugin method that processes event
+ * Plugin method that send the event to OctoLane webhook
  * @param event - The event to process
  * @param meta - The plugin metadata
- * @returns
+ * @returns The webhook payload
  */
-export const processEvent: Plugin["processEvent"] = async (
+export const composeWebhook: Plugin["composeWebhook"] = (
   event,
   { config, cache, ...othersMetadata },
 ) => {
@@ -27,13 +25,17 @@ export const processEvent: Plugin["processEvent"] = async (
 
   if (config.octolaneApiKey) {
     event.properties["octolaneApiKey"] = config.octolaneApiKey;
-    await enrichOctoLaneIp({
-      event,
-      geoip: othersMetadata.geoip,
-      metrics: othersMetadata.metrics,
-      octolaneApiKey: config.octolaneApiKey,
-    });
+    return {
+      url: "https://events.octolane.com/posthog",
+      body: JSON.stringify({
+        event,
+        geoip: othersMetadata.geoip,
+        metrics: othersMetadata.metrics,
+      }),
+      headers: { "Content-Type": "application/json", "x-api-key": config.octolaneApiKey },
+      method: "POST",
+    };
   }
 
-  return event;
+  return null;
 };
